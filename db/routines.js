@@ -9,7 +9,8 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
     VALUES ($1,$2,$3,$4)
     RETURNING *;
   `, [creatorId, isPublic, name, goal]);
-    
+    console.log(routine);
+  return routine;
 } catch (error) {
   throw error;
 }
@@ -17,7 +18,21 @@ async function createRoutine({ creatorId, isPublic, name, goal }) {
 
 async function getRoutineById(id) {}
 
-async function getRoutinesWithoutActivities() {}
+async function getRoutinesWithoutActivities() {
+  try {
+      const { rows } = await client.query(
+      `SELECT *
+       FROM routines;
+     `);
+     console.log("routines" ,rows);
+      return rows;
+    }
+    
+  catch (error) {
+    throw error;
+  }
+
+}
 
 async function getAllRoutines() {}
 
