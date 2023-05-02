@@ -10,14 +10,19 @@ async function createUser({ username, password }) {
   try {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const {rows: [user]} = await client.query(`
+    const {
+      rows: [user],
+    } = await client.query(
+      `
 
     INSERT INTO users(username, password)
     VALUES ($1,$2)
     ON CONFLICT (username) DO NOTHING
     RETURNING *;
 
-  `,[username, hashedPassword]);
+  `,
+      [username, hashedPassword]
+    );
     //removing the password so it is not returned
     delete user.password;
     return user;
@@ -27,12 +32,12 @@ async function createUser({ username, password }) {
 }
 
 async function getUser({ username, password }) {
-  try{
+  try {
+    const user = await getUserByUsername(username);
+    const hashedPassword = user.password;
 
-      const user = await getUserByUsername(username);
-      const hashedPassword = user.password;
+    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
-      const passwordsMatch = await bcrypt.compare(password, hashedPassword);
 
       if (passwordsMatch) {
         delete user.password;
@@ -40,37 +45,45 @@ async function getUser({ username, password }) {
       }
 
   }
-  catch(error)
-  {
+   catch (error) {
+
     console.log(error);
   }
-  
 }
 
 async function getUserById(userId) {
   try {
-    const { rows: [user] } = await client.query(`
+    const {
+      rows: [user],
+    } = await client.query(
+      `
     SELECT *
     FROM users
     WHERE id=$1;
-  `, [userId]);
-  delete user.password;
-  return user;
+  `,
+      [userId]
+    );
+    delete user.password;
+    return user;
   } catch (error) {
     console.log(error);
   }
-
 }
 
 async function getUserByUsername(userName) {
   try {
-    const { rows: [user] } = await client.query(`
+    const {
+      rows: [user],
+    } = await client.query(
+      `
     SELECT *
     FROM users
     WHERE username=$1;
-  `, [userName]);
+  `,
+      [userName]
+    );
 
-  return user;
+    return user;
   } catch (error) {
     console.log(error);
   }

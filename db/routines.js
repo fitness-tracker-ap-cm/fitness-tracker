@@ -89,6 +89,7 @@ async function getRoutinesWithoutActivities() {
     console.log("routines", rows);
     return rows;
   } catch (error) {
+
     throw error;
   }
 }
@@ -190,6 +191,10 @@ async function getPublicRoutinesByActivity({ id }) {
     throw error;
   }
   
+
+    throw error;
+  }
+
 }
 
 async function updateRoutine({ id, ...fields }) {
