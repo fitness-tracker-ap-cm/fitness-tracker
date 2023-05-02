@@ -95,7 +95,6 @@ async function updateActivity({ id, ...fields }) {
       `,
         Object.values(fields)
       );
-      console.log(updateActivity);
       return updateActivity;
     }
   } catch (error) {
