@@ -53,8 +53,9 @@ router.post('/register', async (req, res, next) => {
 });
 
 // POST /api/users/login
-router.post('./login',async (req, res, next) =>{
+router.post('/login', async (req, res, next) =>{
     const { username, password } = req.body;
+
 // request must have both
 if (!username || !password) {
     next({
@@ -62,19 +63,17 @@ if (!username || !password) {
       message: "Please supply both a username and password",
       error: "MissingCredentialsError"
     });
-
+}  
     try{
         const user = await getUserByUsername(username);
         
-
-         if (user && user.password == password) {
+         if (user) {
             const match = await bcrypt.compare(password, user.password);
             if(match){
-                 // create token & return to user
+                // create token & return to user
                 const token = jwt.sign({ id: user.id, username: user.username, password : user.password}, process.env.JWT_SECRET);
-        
-            const decodedFromToken = jwt.verify(token, JWT_SECRET);
-            res.send({message: "you're logged in!" });
+                const decodedFromToken = jwt.verify(token, JWT_SECRET);
+                res.send({message: "you're logged in!" });
             }
             else
             {
@@ -98,10 +97,7 @@ if (!username || !password) {
     {
         next(error);
     }
-  }
-
-
-});
+  });
 
 // GET /api/users/me
 
