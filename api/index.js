@@ -18,14 +18,14 @@ router.use(async (req, res, next) => {
       const { id } = jwt.verify(token, JWT_SECRET);
       req.user = await getUserById(id);
       next();
-    } catch ({ message,name }) {
+    } catch ({ message, name }) {
       next({
-        message,name
+        message,
+        name,
       });
     }
   } else {
-    next({ message:"Authorization Error",
-    name: "Authorization Error" });
+    next({ message: "Authorization Error", name: "Authorization Error" });
   }
 });
 router.use((req, res, next) => {
@@ -37,8 +37,7 @@ router.use((req, res, next) => {
 
 // GET /api/health
 router.get("/health", async (req, res, next) => {
-res.send({message : "it is healthy",
-            status: 200});
+  res.send({ message: "it is healthy", status: 200 });
 });
 
 // ROUTER: /api/users
@@ -59,11 +58,10 @@ router.use("/routine_activities", routineActivitiesRouter);
 
 //Error Handler
 router.use((error, req, res, next) => {
-  console.log("Error object", error);
   res.send({
-    message:error.message,
+    message: error.message,
     name: error.name,
-    error:error.error
+    error: error.error,
   });
 });
 
