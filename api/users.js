@@ -5,11 +5,14 @@ const {
   PasswordTooShortError,
   UserTakenError,
   UserDoesNotExistError,
+  UnauthorizedError,
 } = require("../errors");
-const { createUser, getUserByUsername } = require("../db");
+
+const { createUser, getUserByUsername, getPublicRoutinesByUser, getAllRoutinesByUser } = require("../db");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
+const { requireUser } = require("./utils");
 
 // POST /api/users/register
 router.post("/register", async (req, res, next) => {
@@ -78,8 +81,8 @@ router.post("/login", async (req, res, next) => {
           { id: user.id, username: user.username, password: user.password },
           process.env.JWT_SECRET
         );
-        const decodedFromToken = jwt.verify(token, JWT_SECRET);
-        res.send({ message: "you're logged in!" });
+
+        res.send({ token: token, user: user, message: "you're logged in!" });
       } else {
         next({
           message: "Invalid Password",
@@ -100,7 +103,70 @@ router.post("/login", async (req, res, next) => {
 });
 
 // GET /api/users/me
-
+router.get("/me", requireUser, async (req, res, next) => {
+  const prefix = "Bearer ";
+  const auth = req.header("Authorization");
+  if (!auth) {
+    next({
+      message: UnauthorizedError(),
+      name: "UnauthorizedError",
+      error: "UnauthorizedError",
+    });
+  } 
+  else 
+  {
+    if (auth.startsWith(prefix)) {
+      const token = auth.slice(prefix.length);
+      try {
+        const { id } = jwt.verify(token, JWT_SECRET);
+        if (id) {
+          //return user
+          res.send(req.user);
+        }
+        else
+        {
+          res.status(401);
+          next({
+            message: UnauthorizedError(),
+            name: "UnauthorizedError",
+            error: "UnauthorizedError",
+          });
+        }
+      } catch (error) {
+        next(error);
+      }
+    } else 
+    {
+      next({
+        message: UnauthorizedError(),
+        name: "UnauthorizedError",
+        error: "UnauthorizedError",
+      });
+    }
+  }
+});
 // GET /api/users/:username/routines
+router.get('/:username/routines', requireUser, async(req,res,next) => {
+    const { username } = req.params;
+  
+    try{
+        if(req.user && req.user.username === username) //if user is logged in and request their own routnes then display all of their Routines public and private
+        {
+            const userRoutines = await getAllRoutinesByUser({username});
+            res.send(userRoutines); 
+        }
+        else //get only the public routines  for the requested username 
+        {
+           const publicRoutines = await getPublicRoutinesByUser({username});
+           res.send(publicRoutines); 
+        }
+    }
+    catch(error)
+    {
+        next(error);
+    }
+});
 
 module.exports = router;
+
+
