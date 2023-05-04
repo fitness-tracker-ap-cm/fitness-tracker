@@ -7,6 +7,7 @@ const {
   getActivityByName,
   getActivityById,
   updateActivity,
+  getPublicRoutinesByActivity,
 } = require("../db");
 const { ActivityExistsError, ActivityNotFoundError } = require("../errors");
 
@@ -16,7 +17,6 @@ router.get("/", async (req, res, next) => {
     const activities = await getAllActivities();
     res.send(activities).status(200);
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
@@ -49,7 +49,6 @@ router.patch("/:activityId", requireUser, async (req, res, next) => {
 
   try {
     const activity = await getActivityById(id);
-    console.log(activity);
 
     if (!activity) {
       next({
@@ -76,5 +75,48 @@ router.patch("/:activityId", requireUser, async (req, res, next) => {
 });
 
 // GET /activities/:activityId/routines
+router.get("/:activityId/routines", async (req, res, next) => {
+  const id = +req.params.activityId;
+
+  const activityExists = await getActivityById(id);
+  if (!activityExists) {
+    next({
+      name: "Acvitivity not found",
+      message: ActivityNotFoundError(id),
+      error: "Acvitivity not found",
+    });
+  } else {
+    try {
+      const routines = await getPublicRoutinesByActivity({ id });
+      if (routines) {
+        res.send(routines);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+});
 
 module.exports = router;
+
+// [
+//   {
+//     activities: [
+//       {
+//         count: 83734,
+//         description: "30 lbs for 20 reps",
+//         duration: 59840,
+//         id: 7,
+//         name: "Weight Lifting",
+//         routineActivityId: 1,
+//         routineId: 1,
+//       },
+//     ],
+//     creatorId: 6,
+//     creatorName: "Allen",
+//     goal: "9a75ee22-d545-47b0-b681-51d6d310734e",
+//     id: 1,
+//     isPublic: true,
+//     name: "c2b739ec-f180-45de-a21e-9b590f45e5ee",
+//   },
+// ];
