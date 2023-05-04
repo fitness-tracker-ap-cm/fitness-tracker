@@ -76,11 +76,25 @@ router.patch("/:activityId", requireUser, async (req, res, next) => {
 
 // GET /activities/:activityId/routines
 router.get("/:activityId/routines", async (req, res, next) => {
-  const { activityId } = req.params;
-  console.log(activityId);
+  const id = +req.params.activityId;
 
-  try {
-  } catch (error) {}
+  const activityExists = await getActivityById(id);
+  if (!activityExists) {
+    next({
+      name: "Acvitivity not found",
+      message: ActivityNotFoundError(id),
+      error: "Acvitivity not found",
+    });
+  } else {
+    try {
+      const routines = await getPublicRoutinesByActivity({ id });
+      if (routines) {
+        res.send(routines);
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 });
 
 module.exports = router;

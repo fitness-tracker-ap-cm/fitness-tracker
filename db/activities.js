@@ -102,8 +102,6 @@ async function attachActivitiesToRoutines(routines) {
     routine.activities = activitiesToAdd;
   }
 
-  console.log("these are my routines: ----->", routines[3]);
-  // console.log('these are my routines: ----->', routines[3].activities);
   return routinesToReturn;
 }
 
