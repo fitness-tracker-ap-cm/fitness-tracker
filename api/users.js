@@ -113,8 +113,8 @@ router.get("/me", requireUser, async (req, res, next) => {
       error: "UnauthorizedError",
     });
   } 
-  else {
-
+  else 
+  {
     if (auth.startsWith(prefix)) {
       const token = auth.slice(prefix.length);
       try {
@@ -123,10 +123,20 @@ router.get("/me", requireUser, async (req, res, next) => {
           //return user
           res.send(req.user);
         }
+        else
+        {
+          res.status(401);
+          next({
+            message: UnauthorizedError(),
+            name: "UnauthorizedError",
+            error: "UnauthorizedError",
+          });
+        }
       } catch (error) {
         next(error);
       }
-    } else {
+    } else 
+    {
       next({
         message: UnauthorizedError(),
         name: "UnauthorizedError",
