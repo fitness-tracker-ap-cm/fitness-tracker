@@ -1,8 +1,9 @@
 const { UnauthorizedError} = require("../errors");
 
-function requireUser(req, user, next) {
+function requireUser(req,res, next) {
   //Check if there is a user logged in
   if (!req.user) {
+    res.status(401);
     next({
       message: UnauthorizedError(),
         name: "UnauthorizedError",
