@@ -5,8 +5,12 @@ const {
   updateRoutineActivity,
   canEditRoutineActivity,
   getRoutineById,
+  destroyRoutineActivity,
 } = require("../db");
-const { UnauthorizedUpdateError } = require("../errors");
+const {
+  UnauthorizedUpdateError,
+  UnauthorizedDeleteError,
+} = require("../errors");
 
 // PATCH /api/routine_activities/:routineActivityId
 router.patch("/:routineActivityId", requireUser, async (req, res, next) => {
@@ -30,5 +34,29 @@ router.patch("/:routineActivityId", requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/routine_activities/:routineActivityId
+
+router.delete("/:routineActivityId", requireUser, async (req, res, next) => {
+  const id = +req.params.routineActivityId;
+  const canEdit = await canEditRoutineActivity(id, req.user.id);
+  const { name } = await getRoutineById(id);
+
+  if (!canEdit) {
+    res.status(403);
+    next({
+      name: "Unauthorized to delete",
+      message: UnauthorizedDeleteError(req.user.username, name),
+      error: "Unauthorized to delete",
+    });
+  }
+  if (canEdit) {
+    try {
+      const deletedRoutineActivity = await destroyRoutineActivity(id);
+      res.send(deletedRoutineActivity).status(200);
+    } catch (error) {
+      next(error);
+    }
+  }
+  console.log(canEdit);
+});
 
 module.exports = router;
