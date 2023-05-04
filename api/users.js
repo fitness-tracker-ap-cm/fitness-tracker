@@ -104,47 +104,13 @@ router.post("/login", async (req, res, next) => {
 
 // GET /api/users/me
 router.get("/me", requireUser, async (req, res, next) => {
-  const prefix = "Bearer ";
-  const auth = req.header("Authorization");
-  if (!auth) {
-    next({
-      message: UnauthorizedError(),
-      name: "UnauthorizedError",
-      error: "UnauthorizedError",
-    });
-  } 
-  else 
-  {
-    if (auth.startsWith(prefix)) {
-      const token = auth.slice(prefix.length);
-      try {
-        const { id } = jwt.verify(token, JWT_SECRET);
-        if (id) {
-          //return user
-          res.send(req.user);
-        }
-        else
-        {
-          res.status(401);
-          next({
-            message: UnauthorizedError(),
-            name: "UnauthorizedError",
-            error: "UnauthorizedError",
-          });
-        }
-      } catch (error) {
-        next(error);
-      }
-    } else 
-    {
-      next({
-        message: UnauthorizedError(),
-        name: "UnauthorizedError",
-        error: "UnauthorizedError",
-      });
-    }
+  try {
+    res.send(req.user);
+  } catch (error) {
+    next(error);
   }
 });
+
 // GET /api/users/:username/routines
 router.get('/:username/routines', requireUser, async(req,res,next) => {
     const { username } = req.params;
