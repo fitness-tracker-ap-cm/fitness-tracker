@@ -32,37 +32,7 @@ async function getRoutineById(id) {
         `,
       [id]
     );
-
-    if (!routine) {
-      throw error;
-    }
-
-
-    const { rows: activities } = await client.query(
-      `
-      SELECT activities.*, routine_activities.duration,routine_activities.count, routine_activities."routineId", routine_activities.id as "routineActivityId"
-      FROM activities
-      JOIN routine_activities
-      ON activities.id = routine_activities."activityId"
-      WHERE routine_activities."routineId" = $1;
-    `,[routine.id]);
-
- 
-
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-        SELECT id,username
-        FROM users
-       WHERE users.id = $1;
-      `,
-      [routine.creatorId]
-    );
-
-    routine.activities = activities;
-    routine.creatorName = user.username;
-
+   
     return routine;
   } catch (error) {
     throw error;

@@ -6,10 +6,12 @@ const {
   updateRoutine,
   getRoutineById,
   destroyRoutine,
+  addActivityToRoutine,
+  getRoutineActivitiesByRoutine
 } = require("../db");
 
 const router = express.Router();
-const { UnauthorizedUpdateError,UnauthorizedDeleteError } = require("../errors");
+const { UnauthorizedUpdateError,UnauthorizedDeleteError,DuplicateRoutineActivityError} = require("../errors");
 // GET /api/routines
 router.get("/", async (req, res, next) => {
   try {
@@ -66,10 +68,11 @@ router.patch("/:routineId", requireUser, async (req, res, next) => {
 
 // DELETE /api/routines/:routineId
 router.delete("/:routineId", requireUser, async (req, res, next) => {
-  const id = req.params.routineId;
-
+  const id = +req.params.routineId;
+ console.log("router.delete",id);
   try {
     const routine = await getRoutineById(id);
+    console.log(routine);
     if (routine) {
       if (routine.creatorId === req.user.id) {
         await destroyRoutine(id);
@@ -89,5 +92,32 @@ router.delete("/:routineId", requireUser, async (req, res, next) => {
 });
 
 // POST /api/routines/:routineId/activities
+router.post("/:routineId/activities", requireUser, async (req, res, next) => {
+  const id= +req.params.routineId;
+  const routineId = req.params.routineId;
+
+  const { activityId, count, duration } = req.body;
+  console.log("Routine ID ACTIVITY ID ETC: ", id,activityId, count, duration);
+  try {
+    const routineActivities = await getRoutineActivitiesByRoutine({id});
+    const activityFound = routineActivities.filter((routineActivity) => routineActivity.activityId === activityId);
+    console.log("ACTIVITY FOUND ",activityFound);
+
+    if (!activityFound.length) {
+      const newRoutineActivity = await addActivityToRoutine({ routineId,activityId, count, duration });
+      console.log("newRoutineActivity : ", newRoutineActivity);
+      res.send(newRoutineActivity);
+    } else {
+      
+      next({
+        error: "DuplicateRoutineActivityError",
+        message: DuplicateRoutineActivityError(req.params.routineId,activityId),
+        name: "DuplicateRoutineActivityError",
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
