@@ -56,6 +56,18 @@ router.use("/routines", routinesRouter);
 const routineActivitiesRouter = require("./routineActivities");
 router.use("/routine_activities", routineActivitiesRouter);
 
+// ROUTER: /api/
+router.use("/", (req, res, next) =>{
+  res.status(404);
+  res.send(
+    next({
+      message: "Page Not Found",
+      name: "Page Not Found",
+      error: "Page Not Found",
+    })
+  )
+});
+
 //Error Handler
 router.use((error, req, res, next) => {
   res.send({
