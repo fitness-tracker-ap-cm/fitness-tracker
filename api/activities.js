@@ -98,25 +98,3 @@ router.get("/:activityId/routines", async (req, res, next) => {
 });
 
 module.exports = router;
-
-// [
-//   {
-//     activities: [
-//       {
-//         count: 83734,
-//         description: "30 lbs for 20 reps",
-//         duration: 59840,
-//         id: 7,
-//         name: "Weight Lifting",
-//         routineActivityId: 1,
-//         routineId: 1,
-//       },
-//     ],
-//     creatorId: 6,
-//     creatorName: "Allen",
-//     goal: "9a75ee22-d545-47b0-b681-51d6d310734e",
-//     id: 1,
-//     isPublic: true,
-//     name: "c2b739ec-f180-45de-a21e-9b590f45e5ee",
-//   },
-// ];
