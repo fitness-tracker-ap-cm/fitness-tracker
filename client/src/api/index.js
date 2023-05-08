@@ -53,6 +53,7 @@ export async function getAllActivities() {
 }
 
 export const registerUser = async (userObj) => {
+  console.log(userObj);
   try {
     const response = await fetch(`${BASE}/users/register`, {
       method: "POST",

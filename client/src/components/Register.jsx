@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { registerUser } from "../api";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const userObj = {
-      username,
-      password,
-    };
-    try {
+    console.log(password.length);
+    if (password.length <= 8) {
+      alert("password is too short!");
+    } else {
+      const userObj = { username: username, password: password };
       const { user, token } = await registerUser(userObj);
       if (token) {
+        setToken(token);
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+        navigate("/Home");
       }
-    } catch (error) {
-      console.error(error);
     }
   };
   return (
