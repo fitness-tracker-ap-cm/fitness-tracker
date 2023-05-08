@@ -11,6 +11,34 @@ export async function getAllPublicRoutines() {
     throw error;
   }
 }
+
+export const loginUser = async (userObject) => {
+  try {
+    const response = await fetch(`${BASE}/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userObject),
+    });
+
+    const { success, error, data } = await response.json();
+
+    if (success) {
+      const { token, message } = data;
+
+      return { token, message };
+    }
+    if (!success && !error) {
+      const { name, message } = data;
+      return { name, message };
+    }
+    console.log(success, error, data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //*****************************Christian *********************************
 export async function getAllActivities() {
   try {
