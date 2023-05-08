@@ -13,9 +13,9 @@ import { Routes, Route } from "react-router-dom";
 
 const Main = () => {
 
-    // const [currentUser,setCurrentUser] = useState('');
-    // const [token, setToken] = useState('');
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentUser,setCurrentUser] = useState('');
+    const [token, setToken] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [allPublicRoutines, setAllPublicRoutines] = useState([]);
     const [allActivities, setAllActivities] = useState([]);
 
@@ -38,7 +38,10 @@ const Main = () => {
     console.log("Assigning all activities" , allActivities);
   return (
     <div id="main">
-      <Header />
+      <Header isLoggedIn ={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        setCurrentUser={setCurrentUser}
+        setToken={setToken} />
       <Routes>
         {/* christian */}
         <Route path="/Home" element={<Home />} />
@@ -48,7 +51,7 @@ const Main = () => {
         {/*aparna  */}
         <Route path="/Routines" element={<Routines />} />
         <Route path="/MyRoutines" element={<MyRoutines />} />
-        <Route path="/Login" element={<Login />} />
+        <Route path="/Login" element={<Login isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn } token = {token} setToken = {setToken} currentUser = {currentUser} setCurrentUser = {setCurrentUser} />} />
         
       </Routes>
     </div>
