@@ -13,6 +13,7 @@ export async function getAllPublicRoutines() {
 }
 
 export const loginUser = async (userObject) => {
+  console.log(userObject);
   try {
     const response = await fetch(`${BASE}/users/login`, {
       method: "POST",
@@ -22,22 +23,47 @@ export const loginUser = async (userObject) => {
       body: JSON.stringify(userObject),
     });
 
-    const { success, error, data } = await response.json();
-
-    if (success) {
-      const { token, message } = data;
-
-      return { token, message };
-    }
-    if (!success && !error) {
-      const { name, message } = data;
-      return { name, message };
-    }
-    console.log(success, error, data);
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
   }
 };
+
+export const getMe = async (token) => {
+
+    try {
+      const response = await fetch(`${BASE}/users/me`, {
+          method: 'GET',
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  export const getMyRoutines = async (username, token) => {
+    try {
+      const response = await fetch(`${BASE}/users/${username}/routines`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
 //*****************************Christian *********************************
 export async function getAllActivities() {

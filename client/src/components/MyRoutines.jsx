@@ -1,7 +1,13 @@
 import React from "react";
 
 const MyRoutines = () => {
-  return <div>MyRoutines</div>;
+
+  return (
+ <> <h2> My Routines</h2>
+  
+ </>
+  );
 };
 
 export default MyRoutines;
+
