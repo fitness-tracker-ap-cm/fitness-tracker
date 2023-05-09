@@ -1,0 +1,10 @@
+div #single-routine-container{
+    border: 3px solid teal;
+    margin : 10px;
+    padding:15px;
+  }
+
+h2{
+    border-bottom: 2px solid purple;
+    color : #44b;
+}

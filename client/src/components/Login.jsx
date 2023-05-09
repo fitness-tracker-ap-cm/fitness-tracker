@@ -3,14 +3,15 @@ import { useNavigate } from "react-router-dom";
 import './Login.css';
 import { loginUser } from "../api";
 
-const Login = ({ setIsLoggedIn, setToken, setCurrentUser }) => {
+const Login = ({setIsLoggedIn,setToken, setCurrentUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  console.log("Entering Login page");
 
   const handleSubmit = async (event) =>{
     event.preventDefault();
-    const userToAuth = { user: { username: username, password: password } };
+    const userToAuth = { username: username, password: password } ;
     const data = await loginUser(userToAuth);
     if (!data){
 
@@ -21,6 +22,8 @@ const Login = ({ setIsLoggedIn, setToken, setCurrentUser }) => {
       if (data.token) {
         setToken(data.token);
         setCurrentUser(username);
+        localStorage.setItem("currentUser", username);
+        localStorage.setItem("token", data.token);
         setIsLoggedIn(true);
         setUsername('');
         setPassword('');
@@ -28,8 +31,7 @@ const Login = ({ setIsLoggedIn, setToken, setCurrentUser }) => {
       }
     }  
   }
-
-   (
+  return (
     <>
       <h2>Log In</h2>
       <div id='login-container'>
@@ -53,6 +55,6 @@ const Login = ({ setIsLoggedIn, setToken, setCurrentUser }) => {
     </>
 
   );
-};
+}
 
 export default Login;

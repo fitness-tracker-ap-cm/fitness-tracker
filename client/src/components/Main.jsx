@@ -8,13 +8,13 @@ import {
   MyRoutines,
   Activities,
 } from "./index";
-import { getAllActivities, getAllPublicRoutines } from "../api";
+import { getAllActivities, getAllPublicRoutines, getMe} from "../api";
 import { Routes, Route } from "react-router-dom";
 
 const Main = () => {
 
     const [currentUser,setCurrentUser] = useState('');
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [allPublicRoutines, setAllPublicRoutines] = useState([]);
     const [allActivities, setAllActivities] = useState([]);
@@ -34,6 +34,21 @@ const Main = () => {
           getInitialData();
 
     },[]);
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          if (token) {
+            const fetchedUser = await getMe(token);
+            setCurrentUser(fetchedUser.data.username);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchUser();
+    }, [token]);
+
     console.log("Assigning all routines",allPublicRoutines);
     console.log("Assigning all activities" , allActivities);
   return (
@@ -49,9 +64,9 @@ const Main = () => {
         <Route path="/Activities" element={<Activities />} />
 
         {/*aparna  */}
-        <Route path="/Routines" element={<Routines />} />
-        <Route path="/MyRoutines" element={<MyRoutines />} />
-        <Route path="/Login" element={<Login isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn } token = {token} setToken = {setToken} currentUser = {currentUser} setCurrentUser = {setCurrentUser} />} />
+        <Route path="/Routines" element={<Routines allPublicRoutines = {allPublicRoutines}/>} />
+        <Route path="/MyRoutines" element={<MyRoutines setCurrentUser = {setCurrentUser} setToken = {setToken} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />
+        <Route path='/Login' element={<Login isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn } token = {token} setToken = {setToken} currentUser = {currentUser} setCurrentUser = {setCurrentUser} />} />
         
       </Routes>
     </div>
