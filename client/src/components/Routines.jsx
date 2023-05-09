@@ -2,13 +2,34 @@ import React from "react";
 import SingleRoutine from "./SingleRoutine";
 
 const Routines = (props) => {
-const {allPublicRoutines} = props;
+const {allPublicRoutines, isLoggedIn , currentUser} = props;
+
+const filteredRoutines = () =>{
+
+  if(!isLoggedIn)
+  {
+    const publicRoutinesOnly= allPublicRoutines.filter((routine) => {
+     return routine.isPublic
+    });
+    return publicRoutinesOnly;
+  }
+  else{
+    const publicAndPrivateRoutinesByCurrUser = allPublicRoutines.filter((routine) => {
+      //console.log("Is the routine public" , routine.isPublic, "Who created it? ", routine.creatorName , "Who is the currentusername ? ",currentUser );
+      return (routine.isPublic || (!routine.isPublic && routine.creatorName === currentUser))
+    });
+    return publicAndPrivateRoutinesByCurrUser;
+  }
+  
+  
+}
+
   return (
     <>
       <h1>Routines</h1>
-      {allPublicRoutines.length ? (
+      {filteredRoutines().length ? (
         <div>
-          {allPublicRoutines.map((routine, index) => {
+          {filteredRoutines().map((routine, index) => {
             return (
               <div key={index}>
                 <SingleRoutine Routine routine={routine} />

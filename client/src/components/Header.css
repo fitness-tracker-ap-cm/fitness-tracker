@@ -14,6 +14,7 @@ h1 {
   font-style: italic;
   color: #44b;
   text-shadow: 1px 1px 3px black;
+  text-align:center;
 }
 nav.nav-bar a {
   background: #44b;
@@ -27,7 +28,7 @@ nav.nav-bar a {
   letter-spacing: -1px;
   box-shadow: 0 2px 5px -2px black;
 }
-button {
+header button {
   background: #44b;
   padding: 0.5em 1em;
   margin: 10px;

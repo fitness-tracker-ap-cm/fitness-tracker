@@ -12,8 +12,6 @@ const SingleRoutine =  (props) => {
           <p>
             <b>Creator name :</b> {routine.creatorName} 
           </p>
-          {/* isPublic needs to be removed. For testing only */}
-          {/* <p>IsPublic : {routine.isPublic}</p>  */}
           <h2>Activities for the routine</h2>
           {routine.activities.length ? (
             <div>
