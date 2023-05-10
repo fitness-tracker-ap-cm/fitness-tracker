@@ -133,6 +133,27 @@ export const deleteRoutine = async (token, routineId) => {
       console.error(err);
     }
   }
+  export const updateRoutineActivity = async(token,routineActivityId, count, duration ) =>
+  {
+    try {
+      const response = await fetch(`${BASE}/routine_activities/${routineActivityId}`, {
+        method: "PATCH",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          count: count,
+          duration: duration
+        })
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
 
 
