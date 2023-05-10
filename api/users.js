@@ -8,7 +8,12 @@ const {
   UnauthorizedError,
 } = require("../errors");
 
-const { createUser, getUserByUsername, getPublicRoutinesByUser, getAllRoutinesByUser } = require("../db");
+const {
+  createUser,
+  getUserByUsername,
+  getPublicRoutinesByUser,
+  getAllRoutinesByUser,
+} = require("../db");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
@@ -39,20 +44,23 @@ router.post("/register", async (req, res, next) => {
         name: "PasswordTooShortError",
         error: "PasswordTooShortError",
       });
+    } else {
+      const user = await createUser({ username, password });
+      const token = jwt.sign(
+        { id: user.id, username },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1w",
+        }
+      );
+      res.send({
+        token: token,
+        message: "Thank you for signing up",
+        user: user,
+        id: user.id,
+        username: user.userName,
+      });
     }
-
-    const user = await createUser({ username, password });
-    const token = jwt.sign({ id: user.id, username }, process.env.JWT_SECRET, {
-      expiresIn: "1w",
-    });
-
-    res.send({
-      token: token,
-      message: "Thank you for signing up",
-      user: user,
-      id: user.id,
-      username: user.userName,
-    });
   } catch (error) {
     next(error);
   }
@@ -112,27 +120,22 @@ router.get("/me", requireUser, async (req, res, next) => {
 });
 
 // GET /api/users/:username/routines
-router.get('/:username/routines', requireUser, async(req,res,next) => {
-    const { username } = req.params;
-  
-    try{
-        if(req.user && req.user.username === username) //if user is logged in and request their own routnes then display all of their Routines public and private
-        {
-            const userRoutines = await getAllRoutinesByUser({username});
-            res.send(userRoutines); 
-        }
-        else //get only the public routines  for the requested username 
-        {
-           const publicRoutines = await getPublicRoutinesByUser({username});
-           res.send(publicRoutines); 
-        }
+router.get("/:username/routines", requireUser, async (req, res, next) => {
+  const { username } = req.params;
+
+  try {
+    if (req.user && req.user.username === username) {
+      //if user is logged in and request their own routnes then display all of their Routines public and private
+      const userRoutines = await getAllRoutinesByUser({ username });
+      res.send(userRoutines);
+    } //get only the public routines  for the requested username
+    else {
+      const publicRoutines = await getPublicRoutinesByUser({ username });
+      res.send(publicRoutines);
     }
-    catch(error)
-    {
-        next(error);
-    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
-
-
