@@ -15,10 +15,14 @@ const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
       const userObj = { username: username, password: password };
       const { user, token } = await registerUser(userObj);
       if (token) {
+
         setToken(token);
         setCurrentUser(user);
         setIsLoggedIn(true);
         navigate("/Home");
+
+        console.log(user);
+
       }
     }
   };

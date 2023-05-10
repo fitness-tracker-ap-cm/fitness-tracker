@@ -1,0 +1,22 @@
+
+#add-routine-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  font-size: x-large;
+  border: 2px solid teal;
+}
+
+button {
+  background: #44b;
+  padding: 0.5em 1em;
+  margin: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  box-shadow: 0 2px 5px -2px black;
+}
