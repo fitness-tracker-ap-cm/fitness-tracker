@@ -9,7 +9,6 @@ const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(password.length);
     if (password.length <= 8) {
       alert("password is too short!");
     } else {

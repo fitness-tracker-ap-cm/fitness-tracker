@@ -54,7 +54,16 @@ const Main = () => {
             />
           }
         />
-        <Route path="/Activities" element={<Activities />} />
+        <Route
+          path="/Activities"
+          element={
+            <Activities
+              isLoggedIn={isLoggedIn}
+              allActivities={allActivities}
+              setAllActivities={setAllActivities}
+            />
+          }
+        />
 
         {/*aparna  */}
         <Route path="/Routines" element={<Routines />} />
