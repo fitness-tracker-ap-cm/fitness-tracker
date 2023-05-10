@@ -28,6 +28,8 @@ const SingleRoutineDetailedView = (props) => {
       </p>
       <button id ='view-modify-button' onClick={() => {handleClick();}}>Modify Routine</button>
       <button id ='view-modify-button' onClick = {() => {handleDelete()}}>Delete Routine</button>
+      <button id = 'view-modify-button'  onClick={() => { navigate('/AddActivityToRoutine') }}>Add a new Activity to the routine</button>
+      
     </div>
   );
 };
