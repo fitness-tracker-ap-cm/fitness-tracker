@@ -5,7 +5,7 @@ import { getRoutinesByCurrentUser } from "../api";
 import SingleRoutineDetailedView from './SingleRoutineDetailedView'
 
 const MyRoutines = (props) => {
-  const {token,currentUser } = props;
+  const {token,currentUser,selectedRoutine, setSelectedRoutine} = props;
  const [myRoutines, setMyRoutines] = useState([]);
  const navigate = useNavigate();
 
@@ -29,21 +29,14 @@ const MyRoutines = (props) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          handleClick();
-        }}
-      >
-        {" "}
-        Add New Post
-      </button>
+      <button onClick={() => {handleClick();}}>Add New Post</button>
       <h1> My Routines</h1>
       {myRoutines.length ? (
         <div>
           {myRoutines.map((routine, index) => {
             return (
               <div key={index}>
-                <SingleRoutineDetailedView routine = {routine}/>
+                <SingleRoutineDetailedView token = {token} routine = {routine} selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine} setMyRoutines = {setMyRoutines} myRoutines = {myRoutines}/>
               </div>
             );
           })}

@@ -7,7 +7,8 @@ import {
   Routines,
   MyRoutines,
   Activities,
-  AddNewRoutine
+  AddNewRoutine,
+  ModifyRoutine
 } from "./index";
 import { getAllActivities, getAllPublicRoutines, getMe} from "../api";
 import { Routes, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ const Main = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [allPublicRoutines, setAllPublicRoutines] = useState([]);
     const [allActivities, setAllActivities] = useState([]);
+    const [selectedRoutine,setSelectedRoutine] = useState({});
 
     useEffect(( )=>{
         const getInitialData = async () => {
@@ -68,9 +70,10 @@ const Main = () => {
 
         {/*aparna  */}
         <Route path="/Routines" element={<Routines allPublicRoutines = {allPublicRoutines} currentUser = {currentUser} isLoggedIn = {isLoggedIn}/>} />
-        <Route path="/MyRoutines" element={<MyRoutines currentUser = {currentUser} token = {token} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />
+        <Route path="/MyRoutines" element={<MyRoutines selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine}currentUser = {currentUser} token = {token} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />
         <Route path='/Login' element={<Login isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn } token = {token} setToken = {setToken} currentUser = {currentUser} setCurrentUser = {setCurrentUser} />} />
         <Route path ='/AddNewRoutine' element ={<AddNewRoutine currentUser = {currentUser} token = {token}  />}/>
+        <Route path = '/ModifyRoutine' element = {<ModifyRoutine selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine} currentUser = {currentUser} token = {token}/>}/>
       </Routes>
     </div>
   );
