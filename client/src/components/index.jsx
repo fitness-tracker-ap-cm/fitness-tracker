@@ -11,3 +11,4 @@ export { default as SingleRoutineDetailedView } from "./SingleRoutineDetailedVie
 export { default as ModifyRoutine } from "./ModifyRoutine";
 export { default as CreateActivity } from "./CreateActivity";
 export {default as AddActivityToRoutine} from "./AddActivityToRoutine";
+export {default as UpdateSingleActivityInRoutine} from "./UpdateSingleActivityInRoutine";
