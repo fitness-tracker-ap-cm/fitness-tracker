@@ -10,6 +10,7 @@ import {
   AddNewRoutine,
   ModifyRoutine,
   CreateActivity,
+  AddActivityToRoutine,
 } from "./index";
 import { getAllActivities, getAllPublicRoutines, getMe } from "../api";
 import { Routes, Route } from "react-router-dom";
@@ -99,15 +100,14 @@ const Main = () => {
             />
           }
         />
-
+        <Route path ="/AddActivityToRoutine" element={<AddActivityToRoutine/>} />
         {/*aparna  */}
-
         <Route path="/Routines" element={<Routines allPublicRoutines = {allPublicRoutines} currentUser = {currentUser} isLoggedIn = {isLoggedIn}/>} />
         <Route path="/MyRoutines" element={<MyRoutines setAllPublicRoutines = {setAllPublicRoutines} allPublicRoutines = {allPublicRoutines} selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine}currentUser = {currentUser} token = {token} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />
         <Route path='/Login' element={<Login isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn } token = {token} setToken = {setToken} currentUser = {currentUser} setCurrentUser = {setCurrentUser} />} />
         <Route path ='/AddNewRoutine' element ={<AddNewRoutine currentUser = {currentUser} token = {token} setAllPublicRoutines = {setAllPublicRoutines} allPublicRoutines = {allPublicRoutines}/>}/>
         <Route path = '/ModifyRoutine' element = {<ModifyRoutine selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine} currentUser = {currentUser} token = {token}/>}/>
-
+        
       </Routes>
     </div>
   );

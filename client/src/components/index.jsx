@@ -10,3 +10,4 @@ export { default as AddNewRoutine } from "./AddNewRoutine";
 export { default as SingleRoutineDetailedView } from "./SingleRoutineDetailedView";
 export { default as ModifyRoutine } from "./ModifyRoutine";
 export { default as CreateActivity } from "./CreateActivity";
+export {default as AddActivityToRoutine} from "./AddActivityToRoutine";
