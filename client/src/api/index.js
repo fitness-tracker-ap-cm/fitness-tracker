@@ -101,6 +101,24 @@ export const getMe = async (token) => {
 
   }
 
+  export const deleteRoutine = async(token, routineId) =>
+  {
+    try {
+      const response = await fetch(`${BASE}/routines/${routineId}`, {
+        method: "DELETE",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
 //*****************************Christian *********************************
 export async function getAllActivities() {
   try {

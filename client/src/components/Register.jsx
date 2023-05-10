@@ -14,6 +14,7 @@ const Register = () => {
     try {
       const { user, token } = await registerUser(userObj);
       if (token) {
+        console.log(user);
       }
     } catch (error) {
       console.error(error);
