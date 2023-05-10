@@ -1,20 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Activities = ({ isLoggedIn, allActivities, setAllActivities }) => {
-  console.log(isLoggedIn);
-  console.log(setAllActivities);
-  console.log(allActivities);
+const Activities = ({ isLoggedIn, allActivities }) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       {isLoggedIn ? (
         <div>
-          <h1>Create an activity</h1>
-          <form>
-            <label>Name: </label>
-            <input placeholder="Name" />
-            <label>Description: </label>
-            <input placeholder="description" />
-          </form>
+          <button
+            onClick={() => {
+              navigate("/CreateActivity");
+            }}
+          >
+            Create Activity
+          </button>
+
           <h1>All Activities</h1>
           {allActivities.map((activity) => {
             return (
