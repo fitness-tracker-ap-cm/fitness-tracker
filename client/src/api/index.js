@@ -119,6 +119,27 @@ export const getMe = async (token) => {
     }
   }
 
+  export const updateRoutine = async(token, routineObj,routineId) =>
+  {
+    try {
+      const response = await fetch(`${BASE}/routines/${routineId}`, {
+        method: "PATCH",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(routineObj)
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+
+
 //*****************************Christian *********************************
 export async function getAllActivities() {
   try {

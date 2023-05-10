@@ -1,4 +1,3 @@
-import ModifyRoutine from "./ModifyRoutine";
 
 export { default as Header } from "./Header";
 export { default as Home } from "./Home";
