@@ -9,7 +9,7 @@ const filteredRoutines = () =>{
   if(!isLoggedIn)
   {
     const publicRoutinesOnly= allPublicRoutines.filter((routine) => {
-     return routine.isPublic
+     return (routine.isPublic === true || routine.isPublic === null)
     });
     return publicRoutinesOnly;
   }
