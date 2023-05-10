@@ -68,7 +68,7 @@ const Main = () => {
       />
       <Routes>
         {/* christian */}
-        <Route path="/Home" element={<Home />} />
+        <Route path="/Home" element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser}/>} />
         <Route
           path="/Register"
           element={
