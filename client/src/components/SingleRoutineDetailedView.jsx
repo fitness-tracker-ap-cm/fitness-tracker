@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteRoutine } from "../api";
 
 const SingleRoutineDetailedView = (props) => {
-  const { routine , setSelectedRoutine, token, setMyRoutines, myRoutines} = props;
+  const { routine , setSelectedRoutine, token, setMyRoutines, myRoutines, setAllPublicRoutines , allPublicRoutines} = props;
   const navigate = useNavigate();
   
  const handleClick = () => {
@@ -16,7 +16,7 @@ const SingleRoutineDetailedView = (props) => {
   await deleteRoutine(token,routine.id );
   setMyRoutines([...myRoutines.filter((myRoutine)=> myRoutine.id !== routine.id) ]);
   setSelectedRoutine('');
-   
+  setAllPublicRoutines([...allPublicRoutines.filter((publicRoutine)=> publicRoutine.id !== routine.id) ]);
   navigate('/MyRoutines');
  }
   return (

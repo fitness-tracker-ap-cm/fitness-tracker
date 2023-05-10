@@ -3,9 +3,10 @@ import "./MyRoutines.css";
 import { createNewRoutine } from "../api";
 
 const AddNewRoutine = (props) => {
-  const {token } = props;
+  const {token , setAllPublicRoutines , allPublicRoutines } = props;
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
+  const [success, setSuccess] = useState(false);
  const [isPublic, setIsPublic] = useState(false); //is true unless box is checked
 
  const handleChange = () => {
@@ -14,14 +15,20 @@ const AddNewRoutine = (props) => {
   const  handleSubmit = async(event) => {
     event.preventDefault();
     const myRoutineObj ={ name: name,goal:goal,isPublic: isPublic};
-    const result = createNewRoutine(token,myRoutineObj);
-    console.log("New Routine ", result);
+    const newRoutine = createNewRoutine(token,myRoutineObj);
+    console.log("New Routine ", newRoutine);
+    setName('');
+    setGoal('');
+    if(newRoutine !== null){ setSuccess(true);
+    setAllPublicRoutines([...allPublicRoutines,newRoutine])}
   }
 
   return (
     <>
       <h2>Add a Routine</h2>
+
       <form onSubmit = {handleSubmit} id="add-routine-form">
+      <div>{success? <p>Routine Successfully added</p>: <p></p>}</div>
         <span>
           <label htmlFor=" name">Name</label>
           <input
