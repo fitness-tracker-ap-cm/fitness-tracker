@@ -16,12 +16,10 @@ const filteredRoutines = () =>{
   else{
     const publicAndPrivateRoutinesByCurrUser = allPublicRoutines.filter((routine) => {
       //console.log("Is the routine public" , routine.isPublic, "Who created it? ", routine.creatorName , "Who is the currentusername ? ",currentUser );
-      return (routine.isPublic || (!routine.isPublic && routine.creatorName === currentUser))
+      return (routine.isPublic === true || routine.isPublic === null || (routine.isPublic === false && routine.creatorName === currentUser))
     });
     return publicAndPrivateRoutinesByCurrUser;
   }
-  
-  
 }
 
   return (
