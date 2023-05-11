@@ -1,19 +1,40 @@
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import "./SingleRoutine.css"
-import { updateRoutineActivity } from "../api";
+import { deleteRoutineActivity, updateRoutineActivity } from "../api";
 
 
 const UpdateSingleActivityInRoutine = (props) => {
-  const { activity, token } = props;
+  const { activity, token , setAllActivities, allActivities} = props;
   const [duration, setDuration] = useState(activity.duration);
   const [count, setCount] = useState(activity.count);
-  
-  const handleClick = async () =>{
-    const updatedActivity = await updateRoutineActivity(token,activity.routineActivityId,count,duration );
-    if(updatedActivity !== null){
+  const navigate = useNavigate();
+  const handleClick = async () => {
+    const updatedActivity = await updateRoutineActivity(
+      token,
+      activity.routineActivityId,
+      count,
+      duration
+    );
+    if (updatedActivity !== null) {
       window.alert("Activity Updated Successfully");
     }
-  }
+  };
+
+  const handleDelete = async () => {
+    const deletedActivity = await deleteRoutineActivity(
+      token,
+      activity.routineActivityId
+    );
+    if (deletedActivity !== null) {
+      setAllActivities([
+        ...allActivities.filter(
+          (myActivity) => myActivity.id !== deletedActivity.id
+        ),
+      ]);
+      navigate("/MyRoutines");
+    }
+  };
 
   return (
     <>
@@ -38,7 +59,7 @@ const UpdateSingleActivityInRoutine = (props) => {
           onChange={(event) => setCount(event.target.value)}
         />
         <button onClick={() => {handleClick();}}>Update Activity</button>
-        <button id="view-modify-button">Delete this Activityy</button>
+        <button id="view-modify-button" onClick ={() =>{handleDelete()}}>Delete this Activityy</button>
       </div>
     </>
   );

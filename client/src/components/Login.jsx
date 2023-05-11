@@ -7,7 +7,6 @@ const Login = ({setIsLoggedIn,setToken, setCurrentUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  console.log("Entering Login page");
 
   const handleSubmit = async (event) =>{
     event.preventDefault();
