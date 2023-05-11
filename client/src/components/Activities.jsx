@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import './Activities.css'
 
 const Activities = ({ isLoggedIn, allActivities }) => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const Activities = ({ isLoggedIn, allActivities }) => {
     <div>
       {isLoggedIn ? (
         <div>
-          <button
+          <button className="create-button"
             onClick={() => {
               navigate("/CreateActivity");
             }}

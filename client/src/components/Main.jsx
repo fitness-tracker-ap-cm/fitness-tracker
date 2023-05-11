@@ -11,7 +11,7 @@ import {
   ModifyRoutine,
   CreateActivity,
   AddActivityToRoutine,
-} from "./index";
+} from "./index.jsx";
 import { getAllActivities, getAllPublicRoutines, getMe } from "../api";
 import { Routes, Route } from "react-router-dom";
 
@@ -66,7 +66,7 @@ const Main = () => {
       />
       <Routes>
         {/* christian */}
-        <Route path="/Home" element={<Home />} />
+        <Route path="/Home" element={<Home isLoggedIn={isLoggedIn} currentUser={currentUser}/>} />
         <Route
           path="/Register"
           element={
@@ -97,7 +97,7 @@ const Main = () => {
             />
           }
         />
-        <Route path ="/AddActivityToRoutine" element={<AddActivityToRoutine/>} />
+        <Route path ="/AddActivityToRoutine" element={<AddActivityToRoutine selectedRoutine={selectedRoutine} allActivities={allActivities} setAllActivities={setAllActivities} token={token} />}  />
         {/*aparna  */}
         <Route path="/Routines" element={<Routines allPublicRoutines = {allPublicRoutines} currentUser = {currentUser} isLoggedIn = {isLoggedIn}/>} />
         <Route path="/MyRoutines" element={<MyRoutines setAllPublicRoutines = {setAllPublicRoutines} allPublicRoutines = {allPublicRoutines} selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine}currentUser = {currentUser} token = {token} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />

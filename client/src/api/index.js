@@ -232,3 +232,27 @@ export const createActivity = async (token, name, description) => {
     throw error;
   }
 };
+
+// POST /api/routines/:routineId/activities
+export const addActivityToRoutine = async(activityId, routineId, count, duration,token )=>{
+  try {
+    const response = await fetch(`${BASE}/routines/${routineId}/activities`, {
+      method:"POST",
+      headers:{
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        activityId: activityId,
+        count: count,
+        duration: duration
+      })
+    })
+    const result = await response.json()
+    console.log(result)
+    return result
+  } catch (error) {
+    console.error
+    throw error
+  }
+}
