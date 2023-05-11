@@ -29,8 +29,8 @@ const MyRoutines = (props) => {
 
   return (
     <>
-      <button onClick={() => {handleClick();}}>Add New Routine</button>
       <h1> My Routines</h1>
+      <button onClick={() => {handleClick();}}>Add New Routine</button>
       {myRoutines.length ? (
         <div>
           {myRoutines.map((routine, index) => {

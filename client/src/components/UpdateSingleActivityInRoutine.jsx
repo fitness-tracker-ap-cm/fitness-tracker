@@ -40,7 +40,7 @@ const UpdateSingleActivityInRoutine = (props) => {
     <>
       <div>
         <p>
-          <b>Name : </b>
+          <b>Activity Name : </b>
           {activity.name}
         </p>
         <p>Description: {activity.description}</p>
@@ -58,8 +58,8 @@ const UpdateSingleActivityInRoutine = (props) => {
           value={count}
           onChange={(event) => setCount(event.target.value)}
         />
-        <button onClick={() => {handleClick();}}>Update Activity</button>
-        <button id="view-modify-button" onClick ={() =>{handleDelete()}}>Delete this Activityy</button>
+        <button onClick={() => {handleClick();}}>Update this Activity</button>
+        <button id="view-modify-button" onClick ={() =>{handleDelete()}}>Delete this Activity</button>
       </div>
     </>
   );
