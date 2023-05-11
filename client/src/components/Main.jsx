@@ -100,7 +100,7 @@ const Main = () => {
             />
           }
         />
-        <Route path ="/AddActivityToRoutine" element={<AddActivityToRoutine selectedRoutine={selectedRoutine} allActivities={allActivities} setAllActivities={setAllActivities} token={token}/>}  />
+        <Route path ="/AddActivityToRoutine" element={<AddActivityToRoutine selectedRoutine={selectedRoutine} allActivities={allActivities} setAllActivities={setAllActivities} token={token} />}  />
         {/*aparna  */}
         <Route path="/Routines" element={<Routines allPublicRoutines = {allPublicRoutines} currentUser = {currentUser} isLoggedIn = {isLoggedIn}/>} />
         <Route path="/MyRoutines" element={<MyRoutines setAllPublicRoutines = {setAllPublicRoutines} allPublicRoutines = {allPublicRoutines} selectedRoutine = {selectedRoutine} setSelectedRoutine = {setSelectedRoutine}currentUser = {currentUser} token = {token} setIsLoggedIn = {setIsLoggedIn} isLoggedIn = {isLoggedIn}/>} />

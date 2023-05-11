@@ -2,23 +2,33 @@ import React, {useState} from "react";
 import { addActivityToRoutine } from "../api";
 
 const AddActivityToRoutine = ({selectedRoutine, allActivities, token}) => {
-console.log(selectedRoutine)
  const [activityId, setActivityId] = useState(0)
- const [count, setCount] = useState(0)
- const [duration, setDuration] = useState(0)
- console.log(activityId, count, duration)
+ const [count, setCount] = useState()
+ const [duration, setDuration] = useState()
+
 
  const handleSubmit = async(event)=>{
     event.preventDefault()
     const response = await addActivityToRoutine(activityId, selectedRoutine.id, count, duration, token)
    console.log(response)
  }
+ const handleChange = (e)=>{
+    setActivityId(e.target.value)
+ }
 
 return (
 <div>
 <form onSubmit={handleSubmit}>
-    <label>Enter Activity Id</label>
-    <input type="numner" placeholder="Enter an activityId" value={activityId} onChange={(e)=>{setActivityId(e.target.value)}}/>
+<div>
+    <label>Choose an activity:</label>
+    <select value={activityId} onChange={handleChange}>
+    {allActivities.map((activity)=>{
+    return(
+        <option key={activity.id}value={activity.id}>{activity.name}</option>
+    )})}
+    </select>
+    </div>
+  
     <label>Count</label>
     <input type="number" placeholder="Enter a count" value={count} onChange={(e)=>{setCount(e.target.value)}}/>
     <label>Duration</label>
@@ -26,16 +36,6 @@ return (
     <button>Create an activity for your routine</button>
 
 </form>
-<h1>Create your own routine by selecting one of ActivityId! </h1>
-    {allActivities.map((activity)=>{
-        return(
-            <div key={activity.id}>
-                <p>Activity Id: {activity.id}</p>
-                <h1>{activity.name}</h1>
-                <p>{activity.description}</p>
-            </div>
-        )
-    })}
 </div>
 );
 }
