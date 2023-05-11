@@ -5,8 +5,8 @@
   justify-content: left;
   align-items:center;
   font-size: x-large;
-  border: 2px solid teal;
-  padding : 15px;
+  border: 2px solid teal; 
+  margin: 10px;
 }
 
 button {
@@ -18,7 +18,7 @@ button {
   font-weight: bold;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: -1px;
+  letter-spacing: normal;
   box-shadow: 0 2px 5px -2px black;
 }
 

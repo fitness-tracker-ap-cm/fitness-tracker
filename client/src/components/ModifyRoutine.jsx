@@ -45,8 +45,8 @@ const handleSubmit = async (event) => {
 
 return (
   <>
-    <h2>Update Routine</h2>
     <form onSubmit = {handleSubmit} id="add-routine-form">
+    <h3>Update Routine</h3>
       <span>
         <label htmlFor=" name">Name</label>
         <input
