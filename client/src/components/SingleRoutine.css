@@ -5,7 +5,7 @@ div #single-routine-container{
   }
 
 h2{
-    border-bottom: 2px solid purple;
+    border-bottom: 1px solid purple;
     color : #44b;
 }
 
@@ -20,3 +20,7 @@ h2{
   box-shadow: none;
 }
 
+input #view-modify-input{
+  width: 100%;
+  box-sizing: border-box;
+}

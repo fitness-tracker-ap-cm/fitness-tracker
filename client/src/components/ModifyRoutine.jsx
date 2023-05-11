@@ -1,14 +1,15 @@
 import React, {useState} from "react";
 import "./SingleRoutine.css";
 import { updateRoutine } from "../api";
+import UpdateSingleActivityInRoutine from "./UpdateSingleActivityInRoutine";
 
 
 
 const ModifyRoutine = (props) => {
-  const {selectedRoutine, token, currentUser} = props;
-console.log(selectedRoutine, token, currentUser);
-const [name, setName] = useState("");
-const [goal, setGoal] = useState("");
+  const {selectedRoutine, token} = props;
+console.log("In Modify Routine displaying the selected routine Object : ", selectedRoutine);
+const [name, setName] = useState(selectedRoutine.name);
+const [goal, setGoal] = useState(selectedRoutine.goal);
 const [success, setSuccess] = useState(false);
 
 const  handleSubmit = async(event) => {
@@ -16,8 +17,6 @@ const  handleSubmit = async(event) => {
   const myRoutineObj ={ name: name,goal:goal};
    const result = updateRoutine(token, myRoutineObj,selectedRoutine.id);
    console.log("Updated Routine ", result);
-   setName('');
-   setGoal('');
    if(result !== null){ setSuccess(true);}
 
 }
@@ -34,7 +33,6 @@ return (
           name="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder= {selectedRoutine.name}
           required
         />
       </span>
@@ -45,13 +43,26 @@ return (
           name="goal"
           value={goal}
           onChange={(event) => setGoal(event.target.value)}
-          placeholder={selectedRoutine.goal}
           required
         /> 
       </span>
-      <button type="submit">SAVE</button>
+      <button type="submit">SAVE ROUTINE</button>
     </form>
-  
+    {selectedRoutine.activities.length ? (
+            <div>
+              {selectedRoutine.activities.map((activity, index) => {
+                return (
+                  <div key={index}  id='single-routine-container'>
+                    <UpdateSingleActivityInRoutine activity={activity} token ={token} />
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div>
+              <h3>No Activities to display</h3>
+            </div>
+          )}
   </>
 );
 };
