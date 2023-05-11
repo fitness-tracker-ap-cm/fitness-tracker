@@ -20,7 +20,9 @@ h2{
   box-shadow: none;
 }
 
-input #view-modify-input{
-  width: 100%;
-  box-sizing: border-box;
+#modify-routine-input-name{
+  width: 300px;
+}
+#modify-routine-input-goal{
+  width: 300px;
 }

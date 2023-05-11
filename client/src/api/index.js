@@ -4,7 +4,6 @@ export async function getAllPublicRoutines() {
   try {
     const response = await fetch(`${BASE}/routines`);
     const publicRoutinesList = await response.json();
-    console.log("Routines :", publicRoutinesList);
     return publicRoutinesList;
   } catch (error) {
     console.error(error);
@@ -146,6 +145,24 @@ export const deleteRoutine = async (token, routineId) => {
           count: count,
           duration: duration
         })
+      });
+      const result = await response.json();
+      console.log(result);
+      return result
+    } catch (err) {
+      console.error(err);
+    }
+  }
+ // DELETE /api/routine_activities/:routineActivityId
+  export const deleteRoutineActivity = async (token, routineActivityId ) =>
+  {
+    try {
+      const response = await fetch(`${BASE}/routine_activities/${routineActivityId}`, {
+        method: "DELETE",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+        },
       });
       const result = await response.json();
       console.log(result);

@@ -2,10 +2,11 @@
 #add-routine-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: left;
   align-items:center;
   font-size: x-large;
   border: 2px solid teal;
+  padding : 15px;
 }
 
 button {
@@ -19,4 +20,12 @@ button {
   text-transform: uppercase;
   letter-spacing: -1px;
   box-shadow: 0 2px 5px -2px black;
+}
+
+#add-routine-input-name{
+  width:300px;
+}
+
+#add-routine-input-goal{
+  width: 300px;
 }
