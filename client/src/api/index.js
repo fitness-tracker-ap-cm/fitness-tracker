@@ -198,8 +198,7 @@ export const registerUser = async (userObj) => {
       body: JSON.stringify(userObj),
     });
     const result = await response.json();
-    console.log(result);
-    return result;
+return result
   } catch (err) {
     console.error(err);
   }
@@ -235,6 +234,7 @@ export const createActivity = async (token, name, description) => {
 
 // POST /api/routines/:routineId/activities
 export const addActivityToRoutine = async(activityId, routineId, count, duration,token )=>{
+  console.log(activityId, routineId, count, duration)
   try {
     const response = await fetch(`${BASE}/routines/${routineId}/activities`, {
       method:"POST",
