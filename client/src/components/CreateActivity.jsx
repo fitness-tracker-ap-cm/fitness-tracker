@@ -20,6 +20,8 @@ const CreateActivity = ({ token, setAllActivities, allActivities }) => {
     }
   };
   return (
+    <>
+    <h2>Create an activity now!</h2>
     <form onSubmit={handleSubmit}>
       <label>Name: </label>
       <input
@@ -41,6 +43,7 @@ const CreateActivity = ({ token, setAllActivities, allActivities }) => {
       />
       <button type="submit">Create</button>
     </form>
+    </>
   );
 };
 
