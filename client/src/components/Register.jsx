@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../api";
 import { useNavigate } from "react-router-dom";
-
+import './Login.css'
 const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -13,22 +13,29 @@ const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
       alert("password is too short!");
     } else {
       const userObj = { username: username, password: password };
-      const { user, token } = await registerUser(userObj);
-      if (token) {
-        setToken(token);
-        setCurrentUser(user);
+      const data = await registerUser(userObj);
+      if(data.token) {
+        setToken(data.token);
+        setCurrentUser(username);
         setIsLoggedIn(true);
         navigate("/Home");
-
-        console.log(user);
+      }else{
+        if(data.message){
+          alert(data.message)
+        }
       }
+      
     }
   };
   return (
-    <div>
+    <>
+
+    <h2>Register</h2>
+    <div id="login-container">
       <form onSubmit={handleSubmit}>
         <label>Username: </label>
         <input
+        className="login-field"
           placeholder="Enter a username"
           type="text"
           value={username}
@@ -38,6 +45,7 @@ const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
         />
         <label>Password: </label>
         <input
+        className="login-field"
           placeholder="Enter a password"
           type="text"
           value={password}
@@ -48,6 +56,7 @@ const Register = ({ setCurrentUser, setIsLoggedIn, setToken }) => {
         <button type="submit">Register</button>
       </form>
     </div>
+    </>
   );
 };
 

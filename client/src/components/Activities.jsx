@@ -8,7 +8,7 @@ const Activities = ({ isLoggedIn, allActivities }) => {
   return (
     <div>
       {isLoggedIn ? (
-        <div>
+        <div className="container">
           <button className="create-button"
             onClick={() => {
               navigate("/CreateActivity");
@@ -17,27 +17,55 @@ const Activities = ({ isLoggedIn, allActivities }) => {
             Create Activity
           </button>
 
-          <h1>All Activities</h1>
+          <h1 className="activity-title">All Activities</h1>
+          <div className="App">
+          <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
           {allActivities.map((activity) => {
             return (
-              <div key={activity.id}>
-                <h1>{activity.name}</h1>
-                <h3>{activity.description}</h3>
-              </div>
+              <tr key={activity.id}>
+                <td>{activity.id}</td>
+                <td className="name">{activity.name}</td>
+                <td className="description">{activity.description}</td>
+              </tr>
             );
           })}
+          </tbody>
+          </table>
+          </div>
         </div>
       ) : (
         <div>
-          <h1>Display all activities</h1>
+          <h1>All activities</h1>
+          <div className="App">
+          <table>
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+          </thead>
+          <tbody>
           {allActivities.map((activity) => {
             return (
-              <div key={activity.id}>
-                <h1>{activity.name}</h1>
-                <h3>{activity.description}</h3>
-              </div>
+              <tr key={activity.id}>
+                <td>{activity.id}</td>
+                <td className="name">{activity.name}</td>
+                <td className="description">{activity.description}</td>
+              </tr>
             );
           })}
+          </tbody>
+          </table>
+          </div>
         </div>
       )}
     </div>
