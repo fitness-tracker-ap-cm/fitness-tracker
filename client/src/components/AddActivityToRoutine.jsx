@@ -3,7 +3,7 @@ import { addActivityToRoutine } from "../api";
 import './AddActivityToRoutine.css'
 
 const AddActivityToRoutine = ({selectedRoutine, allActivities, token}) => {
- const [activityId, setActivityId] = useState(allActivities[0].id)
+ const [activityId, setActivityId] = useState(1)
  const [count, setCount] = useState('')
  const [duration, setDuration] = useState('')
 
@@ -32,10 +32,10 @@ return (
     </div>
     <div className="input-container">
 
-    <label>Count</label>
-    <input type="text" placeholder="Enter a count" value={count} onChange={(e)=>{setCount(e.target.value)}}/>
-    <label>Duration</label>
-    <input type="text" placeholder="Enter a duration" value={duration} onChange={(e)=>{setDuration(e.target.value)}}/>
+    <label>Count:</label>
+    <input className="input-field"type="text" placeholder="Enter a count" value={count} onChange={(e)=>{setCount(e.target.value)}}/>
+    <label>Duration:</label>
+    <input className="input-field"type="text" placeholder="Enter a duration" value={duration} onChange={(e)=>{setDuration(e.target.value)}}/>
     <button>Create an activity for your routine</button>
     </div>
 </form>

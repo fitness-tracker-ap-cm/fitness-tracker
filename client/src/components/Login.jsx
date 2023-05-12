@@ -43,12 +43,14 @@ const Login = ({setIsLoggedIn,setToken, setCurrentUser }) => {
           onSubmit={handleSubmit} >
           <label htmlFor='username'>Username:</label>
           <input
+          className="login-field"
             type='text'
             name='username'
             value={username}
             onChange={(event) => setUsername(event.target.value)} />
           <label htmlFor='password'> Password</label>
           <input
+          className="login-field"
             type='text'
             name='password'
             value={password}
