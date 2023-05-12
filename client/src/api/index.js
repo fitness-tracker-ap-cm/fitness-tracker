@@ -205,7 +205,7 @@ return result
 };
 // POST /api/activites
 export const createActivity = async (token, name, description) => {
-  console.log(token);
+
   try {
     const response = await fetch(`${BASE}/activities`, {
       method: "POST",
